@@ -1,7 +1,10 @@
 package com.example.oauthpracticev2.global.oauth;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
 
 @Configuration
 @EnableConfigurationProperties(OauthProperties.class)
@@ -13,4 +16,10 @@ public class OauthConfig {
         this.properties = properties;
     }
 
+    // 추가된 부분
+    @Bean
+    public InMemoryProviderRepository inMemoryProviderRepository() {
+        Map<String, OauthProvider> providers = OauthAdapter.getOauthProviders(properties);
+        return new InMemoryProviderRepository(providers);
+    }
 }
