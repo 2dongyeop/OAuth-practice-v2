@@ -1,5 +1,6 @@
 package com.example.oauthpracticev2.member.persistence;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -11,6 +12,7 @@ public class UserProfile {
     private final String email;
     private final String imageUrl;
 
+    @Builder
     public UserProfile(String oauthId, String name, String email, String imageUrl) {
         this.oauthId = oauthId;
         this.name = name;
@@ -18,7 +20,13 @@ public class UserProfile {
         this.imageUrl = imageUrl;
     }
 
-    public Member to() {
-        return new Member(oauthId, name, email, imageUrl, Role.USER);
+    public Member toMember() {
+        return Member.builder()
+                .oauthId(oauthId)
+                .email(email)
+                .name(name)
+                .imageUrl(imageUrl)
+                .role(Role.GUEST)
+                .build();
     }
 }

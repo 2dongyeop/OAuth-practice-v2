@@ -2,6 +2,7 @@ package com.example.oauthpracticev2.member.persistence;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,14 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+
+    public Member update(final String nickname, final String email, final String profileImage) {
+        this.name = nickname;
+        this.email = email;
+        this.imageUrl = profileImage;
+        return this;
+    }
+
     public Member(Long id, String oauthId, String name, String email, String imageUrl, Role role) {
         this.id = id;
         this.oauthId = oauthId;
@@ -31,6 +40,7 @@ public class Member {
         this.role = role;
     }
 
+    @Builder
     public Member(String oauthId, String name, String email, String imageUrl, Role role) {
         this.oauthId = oauthId;
         this.name = name;
