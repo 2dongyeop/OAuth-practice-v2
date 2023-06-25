@@ -5,37 +5,22 @@
 
 <br/>
 
-[히스토리](https://github.com/2dongyeop/OAuth-practice-v2/commits/main)로 들어가면 이해를 돕기 위해 커밋별로 작성한 메시지들을 확인하실 수 있으니 참고 바랍니다.
+### Description
 
-아래에서 동작 방식을 보시지 마시고, [http 요청](https://github.com/2dongyeop/OAuth-practice-v2/tree/main/http)을 보고 따라하시는걸 추천드립니다.
+- [히스토리](https://github.com/2dongyeop/OAuth-practice-v2/commits/main)로 들어가면 이해를 돕기 위해 커밋별로 해당 단계에서 작성한 메시지들을 확인하실 수 있습니다.
+  - 이전 프로젝트에서 작성해놓은 동작 방식을 보시지 마시고, [http 요청](https://github.com/2dongyeop/OAuth-practice-v2/tree/main/http)을 보고 따라하시는걸 추천드립니다.
+  
+  <br/>
 
-추후에는 Redis에 Access token 및 Refresh 토큰을 저장하는 과정을 추가할 예정입니다.
+- Docker를 설치했다는 가정 하에 작성하였으며, [링크에 첨부한 영상](https://www.youtube.com/watch?v=0r2-kX6gvRo)를 통해 redis-cli를 학습하시는걸 추천드립니다.
+  - 로그인 성공시 AccessToken과 RefreshToken을 발급하는 과정에서 RefreshToken만 레디스에 저장하고 있습니다.
+  - AccessToken이 만료되었을 경우, RefreshToken을 이용해 재발급받는 로직은 각자 작성해보시길 바랍니다.
 
-<br/>
+  <br/>
 
-### 사전 설명
-- secret-key가 담긴 파일은 올리지 않습니다.
-  - 하단에 gitignore된 파일 예시를 보여줍니다.
-- OAuth에 대한 사전 지식을 필요로 합니다.
-  - [참고 블로그](https://velog.io/@max9106/OAuth) 
+- **이해를 위해** 예제로 주어진 시크릿 키를 공개로 올린 상태입니다. 
+  - **개인 프로젝트에서는 반드시 키를 공개하시면 안됩니다.**
 
-
-<br/>
-
-### 동작 방식
-
-1. 애플리케이션 실행 후 localhost:8080으로 접속
-2. `Google`, `Github`, `Naver` 중 원하는 방식을 클릭 후 로그인
-3. White Label Page를 무시하고, 주소창에 생긴 code 값을 가져온다. 
-
-→ ex) localhost:8080/redirect/oauth?code=***{code}***
-
-4. Postman을 이용해 이 코드를 백엔드 서버로 보내보자. (아래의 provider에는 google, github, naver가 해당)
-
-→ `GET` http://localhost:8080/login/oauth/{provider}?code={code}
-
-5. Response로 받은 정보를 확인
-6. h2 database에 접속해 회원 정보 확인
 
 <br/>
 
@@ -69,19 +54,4 @@ oauth2:
     naver:
       token-uri: https://nid.naver.com/oauth2.0/token
       user-info-uri: https://openapi.naver.com/v1/nid/me
-```
-
-<br/>
-
-#### `application-jwt.yml`
-```yaml
-jwt:
-  token:
-    secret-key: { secret }
-
-  refresh-token:
-    expire-length: { time }
-
-  access-token:
-    expire-length: { time }
 ```
