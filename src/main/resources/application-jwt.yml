@@ -1,0 +1,7 @@
+security:
+  jwt:
+    token:
+      secret-key: example-secret-key # 나중엔 이런 시크릿 키는 반드시 공개로 해두어서는 안됩니다.
+      access-expire-length: 1200000
+      refresh-expire-length: 3600000
+      token-type: bearer

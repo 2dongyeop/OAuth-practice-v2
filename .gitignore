@@ -12,9 +12,6 @@ build/
 *application-oauth.yml*
 
 
-
-
-
 ### STS ###
 .apt_generated
 .classpath

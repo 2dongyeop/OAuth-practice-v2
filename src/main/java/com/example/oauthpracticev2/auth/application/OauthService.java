@@ -17,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +49,8 @@ public class OauthService {
         Member member = saveOrUpdate(userProfile);
 
         // JWT 생성
-        String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
-        String refreshToken = jwtTokenProvider.createRefreshToken(String.valueOf(member.getId()));
-
-        //TODO 위에서 생성한 JWT를 Redis로 저장하기
+        String accessToken = jwtTokenProvider.createAccessToken(member.getEmail());
+        String refreshToken = jwtTokenProvider.createRefreshToken(member.getEmail());
 
         return LoginResponse.builder()
                 .id(member.getId())
